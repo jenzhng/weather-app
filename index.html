@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html> 
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
+<style> 
+	html {
+	font-family: "Avenir Next", Helevetica, sans-serif;
+	text-align: center;
+}
+
+	body {
+	margin: 0 auto;
+}
+
+	h1, 
+	h2 {
+	font-weight: 300;
+}
+
+
+</style>
+</head>
+
+<!-- <input type = "text" id = "code" value = "enter your key" /> -->
+<!-- <button onclick="weather()">Get Weather</button> -->
+
+<body>
+
+
+<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+
+<input type="text" id="simple" />
+<button onclick="weather(simple.value)">Get Weather</button>
+
+<h1><div id="temp"></div><div id="minutely"></div><div id="hourly"></div></h1>
+<h2><div id="location"></div></h2>
+<figure id = "icon"><canvas id="partly-cloudy-night" width="175" height="175"></canvas></figure>
+
+
+</body>
+
+
+</html>
