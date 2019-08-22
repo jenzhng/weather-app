@@ -7,4 +7,6 @@ Weather app that uses Dark Sky API to display weekly forecast. Requires Dark Sky
 ## Geolocation
 This app uses [Geolocation.getCurrentPosition](https://developer.mozilla.org/en-US/docs/Web/api/Geolocation/getCurrentPosition) to grab the current browser location automatically.
 
+## To Do 
+* get icons working
 
