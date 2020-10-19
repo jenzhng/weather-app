@@ -21,67 +21,168 @@ function startSkycons () {
           skycons.add(document.getElementById("weatherIcon"), Skycons.CLEAR_NIGHT);
           break;
         case "02d":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.PARTLY_CLOUDY_DAY);
-          break;
-        case "02n":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.PARTLY_CLOUDY_NIGHT);
-          break;
-        case "03d":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.CLOUDY);
-          break;
-        case "09d":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.RAIN);
-          break;
-        case "13d":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.SNOW);
-          break;
-        case "50d":
-          skycons.add(document.getElementById("weatherIcon"), Skycons.FOG);
-          break;
+//var fahrenheit;
+var fahrenheitArr = [];
+var $icons = $(".icon");
+var currentIcon;
 
-        default:
+//var $day = $(".day");
 
-    }
+
+function startSkycons(currentIcon){
+	//"https://rawgithub.com/darkskyapp/skycons/master/skycons.js"
 	
-	icons.play();
-}
-
-
-function weather(s) {
-	var location = document.getElementById("location");
-	var code = s;
-	var url = "https://api.darksky.net/forecast/";
-	
-	navigator.geolocation.getCurrentPosition(success, error);
-	
-	function success(position) {
-		latitude = position.coords.latitude;
-		longitude = position.coords.longitude;
-		
-		location.innerHTML = 
-			"Latitude is " + latitude + "° Longitude is " + longitude + "°";
+	var icon = currentIcon;
+	var skycons = new Skycons({"color": "black"});
+		/*skycons.set("icon", Skycons.RAIN);
+		skycons.set("icon", Skycons.CLEAR_DAY);
+		skycons.set("icon", Skycons.CLEAR_NIGHT);
+		skycons.set("icon", Skycons.PARTLY_CLOUDY_DAY);
+		skycons.set("icon", Skycons.PARTLY_CLOUDY_NIGHT);
+		skycons.set("icon", Skycons.CLOUDY);
+		skycons.set("icon", Skycons.SLEET);
+		skycons.set("icon", Skycons.SNOW);
+		skycons.set("icon", Skycons.WIND);
+		skycons.set("icon", Skycons.FOG);
+	*/
+	switch (icon) {
+		case "CLEAR_DAY":
+			skycons.add(document.getElementById("icon"), Skycons.CLEAR_DAY);
+			break;
+		case "CLEAR_NIGHT":
+			skycons.add(document.getElementById("icon"), Skycons.CLEAR_NIGHT);
+			break;
+		case "PARTLY_CLOUDY_DAY":
+			skycons.add(document.getElementById("icon"), Skycons.PARTLY_CLOUDY_DAY);
+			break;
+		case "PARTLY_CLOUDY_NIGHT":
+			skycons.add(document.getElementById("icon"), Skycons.PARTLY_CLOUDY_NIGHT);
+			break;
+		case "CLOUDY":
+			skycons.add(document.getElementById("icon"), Skycons.CLOUDY);
+			break;
+		case "RAIN":
+			skycons.add(document.getElementById("icon"), Skycons.RAIN);
+			break;
+		case "SNOW":
+			skycons.add(document.getElementById("icon"), Skycons.SNOW);
+			break;
+		case "FOG":
+			skycons.add(document.getElementById("icon"), Skycons.FOG);
+			break;
+		case "SLEET":
+			skycons.add(document.getElementById("icon"), Skycons.SLEET);
+			break;
+		case "WIND":
+			skycons.add(document.getElementById("icon"), Skycons.WIND);
+			break;
 			
-		$.getJSON(
-		  url + code + "/" + latitude + "," + longitude + "?callback=?",
-		  function(data) {
-			$("#temp").html(data.currently.temperature + "° F");
-			$("#minutely").html(data.minutely.summary);
-			$("#hourly").html(data.hourly.icon);
-			}
-		);
+		default:
 		
 	}
-	
-	function error() {
-		location.innerHTML = "Unable to retrieve your location";
+/*
+	$icons.each(function() {
+      this.width = 128;
+      this.height = 128;
+    })
+	*/
+	skycons.play();
+}
+
+
+function TimeConverter(UNIX_timestamp) {
+  var date = new Date(UNIX_timestamp * 1000);
+  var week = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var weekShort = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  this.day = week[date.getDay()];
+  this.dayNum = date.getDate();
+  this.dayShort = weekShort[date.getDay()];
+}
+
+function getIcon(icon, iconID) {
+  /*var weather = ["clear-day","clear-night","rain","snow","sleet","wind","fog","cloudy","partly-cloudy-day","partly-cloudy-night"]; */
+  var currentIcon = icon.replace(/-/g, '_').toUpperCase();
+  
+  console.log(currentIcon);
+  startSkycons(currentIcon);
+  
+  //return skycons.set(iconID, Skycons[currentIcon]);
+}
+
+function storeTemp(fahrenheit) {
+  var tempf = Math.round(fahrenheit);
+  fahrenheitArr.push(tempf);
+}
+
+
+function weather() {
+	var code = document.getElementById("apikey").value;
+	var zip = document.getElementById("zipcode").value;
+	var url = "https://api.darksky.net/forecast/";
+	var latitude;
+	var longitude;
+	var $day = $(".day");
+	var UNIX_timestamp;
+	var $temp = $(".temp");
+
+
+	$.getJSON("https://raw.githubusercontent.com/jkeefe/better-weather-alexa/master/data/zips.json", function(data) {
+		$.each(data, function(key, val) {
+			if (key == zip) {
+				latitude = val.lat;
+				longitude = val.lon;
+
+				console.log(latitude);
+				console.log(longitude);
+				$.getJSON(
+					url + code + "/" + latitude + "," + longitude + "?callback=?",
+					function(data) {
+						//$("#temperature").html(data.currently.temperature + "° F");
+						//$("#minutely").html(data.minutely.summary);
+						//$("#hourly").html(data.hourly.icon);
+						console.log($day.length);
+
+						//var time = new TimeConverter(data.currently.time);
+						//$day.first().html(time.day + " " + time.dayNum);
+						
+						
+						
+						for (i = 0; i < $day.length; i++) {
+						// date
+							console.log(data.daily.data[i].time);
+							var time = new TimeConverter(data.daily.data[i].time);
+							$($day[i]).html(time.dayShort + " " + time.dayNum);
+						//	var icon
+						// temp
+							getIcon(data.daily.data[i].icon, $icons[i]);
+							//var iconpicture = data.daily.data[i].icon;
+							//console.log(iconpicture);
+							fahrenheit = data.daily.data[i].temperatureMax;
+							storeTemp(fahrenheit);
+							$($temp[i]).html(fahrenheitArr[i] + " °F");						    
+
+						}
+					}
+				);
+			}
+			
+		});
 	}
-	
-	location.innerHTML = "Locating...";
+	);
+
 	
 
 }
 
-weather(s);
+
+startSkycons(currentIcon);
+TimeConverter(UNIX_timestamp);
+//getIcon(icon);
+getIcon(icon, iconID);
+storeTemp(fahrenheit);
+
+
+weather();
 
 
 // watchPosition
