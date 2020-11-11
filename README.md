@@ -1,7 +1,7 @@
 # weather-app
 
 
-Weather app that uses Dark Sky API to display weekly forecast. Requires Dark Sky API key.
+Weather app that uses Dark Sky API to display weekly forecast. Requires Dark Sky API key. Input zipcode to display 7-day local weather forecast. Uses dark sky icons. 
 
 
 ~~Geolocation - This app uses [Geolocation.getCurrentPosition](https://developer.mozilla.org/en-US/docs/Web/api/Geolocation/getCurrentPosition) to grab the current browser location automatically.~~
