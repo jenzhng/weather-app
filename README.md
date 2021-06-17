@@ -14,4 +14,4 @@ Weather app that uses Dark Sky API to display weekly forecast. Requires Dark Sky
 
 ## Screenshots
 
-![Alt text](https://github.com/jenzhng/weather-app/blob/main/weather_app_demo.PNG)
+![Alt text](https://github.com/jenzhng/weather-app/blob/master/weather_app_demo.png)
