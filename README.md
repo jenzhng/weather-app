@@ -9,8 +9,8 @@ Weather app that uses Dark Sky API to display weekly forecast. Requires Dark Sky
 *This version no longer uses geolocation.
 
 ## To Do 
-- [x] get icons working
-- [x] add css
+- [x] Add Dark Sky icons 
+- [x] Fix styling
 
 ## Screenshots
 
